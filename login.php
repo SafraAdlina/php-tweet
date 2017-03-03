@@ -28,8 +28,8 @@
 		<div class="row">
 			<div class="col s12 m6 offset-m6" style=" margin-top: 100px; border: solid #512DA8; border-radius: 15px; background-color: #F6F6F6;padding: 0 ">
 				<ul class="tabs" style="border-top-left-radius: 15px;border-top-right-radius: 15px;">
-			        <li class="tab col s6"><a href="#test1">LOGIN</a></li>
-			        <li class="tab col s6"><a class="active" href="#test2">REGISTER</a></li>
+			        <li class="tab col s6"><a href="#test1" class="grey-text text-lighten-1">LOGIN</a></li>
+			        <li class="tab col s6"><a href="#test2" class="active grey-text text-lighten-1" >REGISTER</a></li>
 			    </ul>
 				<div class="container" id="test1">
 					<form class="col s12">
