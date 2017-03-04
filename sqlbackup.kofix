@@ -1,0 +1,19 @@
+CREATE TABLE `users` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` varchar(50) NOT NULL DEFAULT '',
+  `user_name` varchar(50) DEFAULT NULL,
+  `user_pass` varchar(50) DEFAULT NULL,
+  `user_bio` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `user_id` (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `tweets` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `tweet_text` varchar(500) NOT NULL DEFAULT 'i tweeted something but i cannot see it',
+  `tweet_like` varchar(1000) NOT NULL DEFAULT '{}',
+  `tweet_user` int(11) unsigned NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `user_tweet` (`tweet_user`),
+  CONSTRAINT `user_tweet` FOREIGN KEY (`tweet_user`) REFERENCES `users` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

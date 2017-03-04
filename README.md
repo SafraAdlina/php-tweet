@@ -1,4 +1,4 @@
-# php-tweet
+# Php-tweet
 Twitter app with vanilla PHP
 
 
