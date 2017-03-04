@@ -151,6 +151,34 @@ if (isset($_POST) && $_POST != null) {
 	}elseif (isset($_POST['action']) && $_POST['action'] == "tweet_new") {
 		// if tweeting enter here
 
+		session_start();
+
+		// pass parameter
+		$tweet 		= $_POST['tweet_body'];  
+		$tweet_user = $_SESSION['user_reg_id'];
+
+		// preg_match_all("/\W/", $password1, $got_symbol_in_password1);
+		// data cleaned
+		
+
+		// open connection
+		require 'openmysqlconnection.php';
+
+		// begin query
+
+		// query
+		$newtweet = mysql_query("INSERT INTO `tweets` (`tweet_text`,`tweet_user`)VALUES('".$tweet."',".$tweet_user.");");
+		
+
+		if ($newtweet) {
+			$_SESSION['error'] 			= "Tweeted!!";
+			header('Location: index.php');
+		}else{
+			$_SESSION['error'] 			= "Opps something wrong with the twitter!!";
+			header('Location: index.php');
+		}
+
+
 		
 	}elseif (isset($_POST['action']) && $_POST['action'] == "tweet_like") {
 		// if favourite enter here
