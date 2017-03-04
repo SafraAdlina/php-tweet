@@ -21,44 +21,44 @@ if (isset($_POST) && $_POST != null) {
 			session_start();
 			$_SESSION['error'] = "Username contain invalid character";
 			header('Location: ' . $_SERVER['HTTP_REFERER']);
-		}
-		if(sizeof($got_symbol_in_password[0])){
+		}elseif(sizeof($got_symbol_in_password[0])){
 			session_start();
 			$_SESSION['error'] = "Password contain invalid character";
 			header('Location: ' . $_SERVER['HTTP_REFERER']);
-		}
 		// end return for errors
-
-		// data cleaned
-		$userid = "@".$username;
-
-		// open connection
-		require 'openmysqlconnection.php';
-
-		// begin query
-
-		// check if user_id already exist
-		$useridexist = mysql_query("SELECT * FROM users where user_id='".$userid."' ");
-		$useridexist_row = mysql_fetch_assoc($useridexist);  // array [user_id = "@user"]
-
-		
-
-		if ($useridexist_row) {
-			// if correct password
-			session_start();
-			$_SESSION['user'] 			= $useridexist_row['user_name'];
-			$_SESSION['user_id'] 		= $useridexist_row['user_id'];
-			$_SESSION['user_reg_id'] 	= $useridexist_row['id'];
-			$_SESSION['user_bio'] 		= $useridexist_row['user_bio'];
-			
-			$_SESSION['error'] 			= "You have succesfully sign in";
-			header('Location: index.php');
 		}else{
-			// if wrong password
+			
 
-			session_start();
-			$_SESSION['error'] = "Username or password is not valid";
-			header('Location: ' . $_SERVER['HTTP_REFERER']);
+			// data cleaned
+			$userid = "@".$username;
+
+			// open connection
+			require 'openmysqlconnection.php';
+
+			// begin query
+
+			// check if user_id already exist
+			$useridexist = mysql_query("SELECT * FROM users where user_id='".$userid."' ");
+			$useridexist_row = mysql_fetch_assoc($useridexist);  // array [user_id = "@user"]
+
+			if ($useridexist_row) {
+				// if correct password
+				session_start();
+				$_SESSION['user'] 			= $useridexist_row['user_name'];
+				$_SESSION['user_id'] 		= $useridexist_row['user_id'];
+				$_SESSION['user_reg_id'] 	= $useridexist_row['id'];
+				$_SESSION['user_bio'] 		= $useridexist_row['user_bio'];
+				
+				$_SESSION['error'] 			= "You have succesfully sign in";
+				header('Location: index.php');
+			}else{
+				// if wrong password
+
+				session_start();
+				$_SESSION['error'] = "Username or password is not valid";
+				header('Location: ' . $_SERVER['HTTP_REFERER']);
+			}
+			
 		}
 		
 	}elseif (isset($_POST['action']) && $_POST['action'] == "register") {
