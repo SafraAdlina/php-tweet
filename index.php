@@ -146,9 +146,19 @@ if (json_encode($tweets_like_row) < 1) {
 						<div class="col s6 m6" style="text-align: center;padding: 0;"><?php echo $total_tweets; ?> Tweets</div>
 					</div>
 					<hr>
+					<!-- status -->
 					<div class="row">
-						<div class="col s12 m12" style="">Whats on my mind...</div>
+						<div class="col s12 m12" style="">
+							<?php 
+								if ($_SESSION['user_bio']) {
+									echo $_SESSION['user_bio']; 	
+								}else{
+									echo "What's on my mind ... ";
+								}
+							?>
+						</div>
 					</div>
+					<!-- end status -->
 					<hr>
 					<div class="row">
 						<div class="col s6 m6">

@@ -75,11 +75,24 @@ if (isset($_POST) && $_POST != null) {
 						}elseif (isset($_POST['action']) && $_POST['action'] == "edit_profile") {
 							// edit profile go here
 
-							
+							require 'openmysqlconnection.php';
 
-							$_SESSION['error'] 			= "Opps this feature is not available yet";
-							header('Location: '.$_SERVER['HTTP_REFERER']);
+							$userdata = mysql_query("SELECT * FROM users where id='".$_SESSION['user_reg_id']."' ");
+							$userdata_row = mysql_fetch_assoc($userdata);  // array [user_id = "@user"]
+							// begin editing
 							
+							echo '
+							<div class="row">
+								<form action="process_control.php" method="post" style="padding: 15px;border-radius: 15px">
+									<textarea id="textarea1" name="user_bio" class="materialize-textarea grey lighten-3" style="padding: 0px 10px; -webkit-box-sizing: border-box;">'.$userdata_row['user_bio'].'</textarea>
+									<button class="btn waves-effect waves-light" type="submit" name="action" value="profile_edit" style="width: 100%;text-transform: none"><i class="material-icons left">movie</i>Save Status !!</button>
+								</form>	
+								<div style="padding: 15px;">
+									<a href="'.$_SERVER['HTTP_REFERER'].'" class="btn waves-effect waves-light" style="width: 100%;text-transform: none"><i class="material-icons left">call_missed</i>Cancel</a>
+								</div>
+								
+							</div>';
+							// finish editing
 						}
 
 	echo '

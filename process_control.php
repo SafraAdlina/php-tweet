@@ -271,7 +271,39 @@ if (isset($_POST) && $_POST != null) {
 
 	}elseif (isset($_POST['action']) && $_POST['action'] == "profile_edit") {
 		// if editing profile enter here
+
+		session_start();
+
+		// pass parameter
+		$bio 		= $_POST['user_bio'];  
+		$user_id 	= $_SESSION['user_reg_id'];
+
+		// preg_match_all("/\W/", $password1, $got_symbol_in_password1);
+		// data cleaned
 		
+
+		// open connection
+		require 'openmysqlconnection.php';
+
+		// begin query
+
+		// query
+		$savestatus = mysql_query("UPDATE users SET user_bio='".$bio."' WHERE id=".$user_id.";");
+		
+
+		if ($savestatus) {
+			$userbionew = mysql_query("SELECT * FROM users where id='".$user_id."' ");
+			$userbionew_row = mysql_fetch_assoc($userbionew);  // array [user_id = "@user"]
+		
+			$_SESSION['error'] 			= "Saved!!";
+			$_SESSION['user_bio'] 		= $userbionew_row['user_bio'];
+			header('Location: index.php');
+		}else{
+			$_SESSION['error'] 			= "Opps something wrong with the twitter!!";
+			header('Location: index.php');
+		}
+
+
 	}
 
 
