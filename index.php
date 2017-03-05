@@ -7,6 +7,23 @@ require 'is_user_login_?.php';
 require 'openmysqlconnection.php';
 $tweets = mysql_query("SELECT * FROM tweets ");
 
+// setting total user tweets
+$tweets_done = mysql_query("SELECT * FROM tweets where tweet_user=".$_SESSION['user_reg_id']."");
+$tweets_done_row = mysql_num_rows($tweets_done);
+$total_tweets = json_encode($tweets_done_row);
+if (json_encode($tweets_done_row) < 1) {
+	$total_tweets = 0;
+}
+// ending set total user tweets
+
+// setting total user like tweets
+$tweets_like = mysql_query("SELECT * FROM tweets WHERE tweet_like LIKE '%".$_SESSION['user_reg_id']."%'");
+$tweets_like_row = mysql_num_rows($tweets_like);
+$total_tweets_like = json_encode($tweets_like_row);
+if (json_encode($tweets_like_row) < 1) {
+	$total_tweets_like = 0;
+}
+// ending set total user like tweets
 
  ?>
 <!DOCTYPE html>
@@ -114,9 +131,42 @@ $tweets = mysql_query("SELECT * FROM tweets ");
 			<!-- end loop -->
 			
 		</div>
+
+		<!-- profile section -->
 		<div class="col s12 m4">
-			
+			<div class="container">
+				<div class="card-panel white lighten-2">
+					<div class="row">
+						<div class="col s4 m4 offset-s4 offset-m4" style="padding: 0;">
+							<img src="images/profile.png" alt="Contact Person" width="100%" class="z-depth-3">
+						</div>	
+					</div>
+					<div class="row">
+						<div class="col s6 m6" style="text-align: center;padding: 0;"><?php echo $total_tweets_like; ?> Likes</div>
+						<div class="col s6 m6" style="text-align: center;padding: 0;"><?php echo $total_tweets; ?> Tweets</div>
+					</div>
+					<hr>
+					<div class="row">
+						<div class="col s12 m12" style="">Whats on my mind...</div>
+					</div>
+					<hr>
+					<div class="row">
+						<div class="col s6 m6">
+							<form action="sub_process_control.php" method="post">
+								<button class="btn col s12 m12 white-text text-lighten-1" type="submit" name="action" value="edit_profile" style="text-transform: none">Profile</button>
+							</form>
+						</div>
+						<div class="col s6 m6">
+							<form action="sub_process_control.php" method="post">
+								<a href="logout.php" class="btn col s12 m12 white-text text-lighten-1" type="submit" name="action" value="edit_profile" style="text-transform: none">Logout</a>
+							</form>
+						</div>
+					</div>
+				</div>	
+			</div>
 		</div>
+		<!-- end of profile section -->
+
 	</div>
 	
 	<?php 
