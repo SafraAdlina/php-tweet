@@ -45,7 +45,7 @@ $tweets = mysql_query("SELECT * FROM tweets where tweet_user='".$_SESSION['user_
 			</div>
 		</div>
 		<div class="col s12 m4">
-
+	
 
 			<!-- begin loop -->
 			<?php 
@@ -61,12 +61,31 @@ $tweets = mysql_query("SELECT * FROM tweets where tweet_user='".$_SESSION['user_
 							<p>'.$tweets_row["tweet_text"].'</p>
 						</div>
 					</div>
-					<div class="row">
-						<a href=""><div class="col s4 m4 grey-text text-lighten-1" style="text-align: center;">LIKE</div></a>
-						<a href=""><div class="col s4 m4 grey-text text-lighten-1" style="text-align: center;">EDIT</div></a>
+				
+					<div class="row">';
+
+					// check if user already like or not
+					$alreadylike = mysql_query("SELECT tweet_like FROM tweets WHERE id=".$tweets_row['id']." AND tweet_like LIKE '%".$_SESSION['user_reg_id']."%'");
+					$alreadylike_row = mysql_fetch_assoc($alreadylike);  
+					// end checking
+					
+					// like section
+						if (json_encode($alreadylike_row) == "false") {
+							echo '<form action="process_control.php" method="post">
+										<input type="hidden" name="tweet_id" value="'.$tweets_row['id'].'">
+										<button class="btn-flat col s4 m4 grey-text text-lighten-1" type="submit" name="action" value="tweet_like" style="text-transform: none">LIKE</button>
+									</form>';
+						}else{
+							echo '<div class="col s4 m4 purple-text text-lighten-1" style="text-align: center;">LIKED</div>';
+						}
+					// end of like section
+
+						
+						echo '<a href=""><div class="col s4 m4 grey-text text-lighten-1" style="text-align: center;">EDIT</div></a>
 						<a href=""><div class="col s4 m4 grey-text text-lighten-1" style="text-align: center;">DELETE</div></a>
-						<!-- like edit delete -->
+						 
 					</div>
+					<!-- like edit delete -->
 				</div>';
 			}
 			?>

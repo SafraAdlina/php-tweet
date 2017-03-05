@@ -182,6 +182,35 @@ if (isset($_POST) && $_POST != null) {
 		
 	}elseif (isset($_POST['action']) && $_POST['action'] == "tweet_like") {
 		// if favourite enter here
+
+		session_start();
+
+		// pass parameter
+		$tweet 		= $_POST['tweet_id'];  
+		$tweet_liker = $_SESSION['user_reg_id'];
+
+		// open connection
+		require 'openmysqlconnection.php';
+
+		// begin query
+
+		// query
+		$getpreviouslike = mysql_query("SELECT tweet_like FROM tweets WHERE id=".$tweet." ");
+		$getpreviouslike_row = mysql_fetch_assoc($getpreviouslike);  
+		
+		$tweet_liker = $getpreviouslike_row['tweet_like'].$tweet_liker; // add new tweet liker
+		
+		$newlike = mysql_query("UPDATE tweets SET tweet_like='".$tweet_liker.",' WHERE id=".$tweet."");
+		
+
+		if ($newlike) {
+			$_SESSION['error'] 			= "Liked!!";
+			header('Location: index.php');
+		}else{
+			$_SESSION['error'] 			= "Opps something wrong with the twitter!!";
+			header('Location: index.php');
+		}
+
 		
 	}elseif (isset($_POST['action']) && $_POST['action'] == "tweet_delete") {
 		// if deleting tweet enter here
