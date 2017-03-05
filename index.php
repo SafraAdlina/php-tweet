@@ -85,9 +85,14 @@ $tweets = mysql_query("SELECT * FROM tweets ");
 						}
 					// end of like section
 						
-
-						echo '<a href=""><div class="col s4 m4 grey-text text-lighten-1" style="text-align: center;">EDIT</div></a>';
-
+					// edit section
+						if (json_encode($owntweet_row) != "false") {
+							echo '<form action="sub_process_control.php" method="post">
+										<input type="hidden" name="tweet_id" value="'.$tweets_row['id'].'">
+										<button class="btn-flat col s4 m4 grey-text text-lighten-1" type="submit" name="action" value="edit_tweet" style="text-transform: none">EDIT</button>
+									</form>';
+						}
+					// end of edit section
 
 					// delete section
 						if (json_encode($owntweet_row) != "false") {
@@ -120,7 +125,7 @@ $tweets = mysql_query("SELECT * FROM tweets ");
 
 	<script>
 		$(document).ready(function(){
-
+			// your javascript go here
 
   		});
 	</script>
