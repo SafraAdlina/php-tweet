@@ -215,6 +215,28 @@ if (isset($_POST) && $_POST != null) {
 	}elseif (isset($_POST['action']) && $_POST['action'] == "tweet_delete") {
 		// if deleting tweet enter here
 
+		session_start();
+
+		// pass parameter
+		$tweet 		= $_POST['tweet_id'];  
+		$tweet_user = $_SESSION['user_reg_id'];
+
+		// open connection
+		require 'openmysqlconnection.php';
+
+		// begin query
+
+		// query
+		$deletethistweet = mysql_query("DELETE FROM tweets WHERE id=".$tweet." AND tweet_user=".$tweet_user." ");
+		
+		if ($deletethistweet) {
+			$_SESSION['error'] 			= "Deleted!!";
+			header('Location: index.php');
+		}else{
+			$_SESSION['error'] 			= "Opps something wrong with the twitter!!";
+			header('Location: index.php');
+		}
+
 	}elseif (isset($_POST['action']) && $_POST['action'] == "profile_edit") {
 		// if editing profile enter here
 		

@@ -5,7 +5,7 @@ require 'is_user_login_?.php';
 
 // begin tweet query
 require 'openmysqlconnection.php';
-$tweets = mysql_query("SELECT * FROM tweets where tweet_user='".$_SESSION['user_reg_id']."' ");
+$tweets = mysql_query("SELECT * FROM tweets ");
 
 
  ?>
@@ -68,7 +68,12 @@ $tweets = mysql_query("SELECT * FROM tweets where tweet_user='".$_SESSION['user_
 					$alreadylike = mysql_query("SELECT tweet_like FROM tweets WHERE id=".$tweets_row['id']." AND tweet_like LIKE '%".$_SESSION['user_reg_id']."%'");
 					$alreadylike_row = mysql_fetch_assoc($alreadylike);  
 					// end checking
-					
+
+					// check if user owned the tweet
+					$owntweet = mysql_query("SELECT tweet_user FROM tweets WHERE id=".$tweets_row['id']." AND tweet_user=".$_SESSION['user_reg_id']." ");
+					$owntweet_row = mysql_fetch_assoc($owntweet);  
+					// end checking					
+
 					// like section
 						if (json_encode($alreadylike_row) == "false") {
 							echo '<form action="process_control.php" method="post">
@@ -79,12 +84,24 @@ $tweets = mysql_query("SELECT * FROM tweets where tweet_user='".$_SESSION['user_
 							echo '<div class="col s4 m4 purple-text text-lighten-1" style="text-align: center;">LIKED</div>';
 						}
 					// end of like section
-
 						
-						echo '<a href=""><div class="col s4 m4 grey-text text-lighten-1" style="text-align: center;">EDIT</div></a>
-						<a href=""><div class="col s4 m4 grey-text text-lighten-1" style="text-align: center;">DELETE</div></a>
-						 
-					</div>
+
+						echo '<a href=""><div class="col s4 m4 grey-text text-lighten-1" style="text-align: center;">EDIT</div></a>';
+
+
+					// delete section
+						if (json_encode($owntweet_row) != "false") {
+							echo '<form action="process_control.php" method="post">
+										<input type="hidden" name="tweet_id" value="'.$tweets_row['id'].'">
+										<button class="btn-flat col s4 m4 grey-text text-lighten-1" type="submit" name="action" value="tweet_delete" style="text-transform: none">DELETE</button>
+									</form>';
+						}
+					// end of delete section
+
+
+
+					
+				echo '</div>
 					<!-- like edit delete -->
 				</div>';
 			}
