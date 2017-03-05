@@ -117,7 +117,7 @@ if (isset($_POST) && $_POST != null) {
 				// if user id exist
 				session_start();
 				$_SESSION['error'] = "User Id already owned";
-				header('Location: ' . $_SERVER['HTTP_REFERER'.'#registerpage']);
+				header('Location: ' . $_SERVER['HTTP_REFERER'].'#registerpage');
 			}else{
 				// if user id avail
 
