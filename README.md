@@ -5,7 +5,8 @@ Twitter app with vanilla PHP
 1. Clone this repo 
 2. import the db [phptweet.sql](https://github.com/kofix-ml/php-tweet/blob/master/phptweet.sql)
 	- if having trouble can use the [sqlbackup.kofix](https://github.com/kofix-ml/php-tweet/blob/master/sqlbackup.kofix)
-3. Serve your PHP ```php -S ip:port ```
+3. CD into your project folder ``` cd php-tweet```
+4. Serve your PHP ```php -S ip:port ```
 4. Well done ~ you are ready to go
 
 ## Setup process
