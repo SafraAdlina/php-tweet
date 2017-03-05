@@ -237,25 +237,42 @@ if (isset($_POST) && $_POST != null) {
 			header('Location: index.php');
 		}
 
+	}elseif (isset($_POST['action']) && $_POST['action'] == "tweet_edit") {
+		// editing a tweet go here
+
+
+		session_start();
+
+		// pass parameter
+		$tweet 		= $_POST['tweet_body'];  
+		$tweet_id   = $_POST['tweet_id'];
+		$tweet_user = $_SESSION['user_reg_id'];
+
+		// preg_match_all("/\W/", $password1, $got_symbol_in_password1);
+		// data cleaned
+		
+
+		// open connection
+		require 'openmysqlconnection.php';
+
+		// begin query
+
+		// query
+		$savetweet = mysql_query("UPDATE tweets SET tweet_text='".$tweet."' WHERE id=".$tweet_id.";");
+		
+
+		if ($savetweet) {
+			$_SESSION['error'] 			= "Saved!!";
+			header('Location: index.php');
+		}else{
+			$_SESSION['error'] 			= "Opps something wrong with the twitter!!";
+			header('Location: index.php');
+		}
+
 	}elseif (isset($_POST['action']) && $_POST['action'] == "profile_edit") {
 		// if editing profile enter here
 		
 	}
-	// $username = $_POST['namadisini'];
-	// $password = $_POST['passworddisini'];	
-
-	// $thisquery = mysql_query("SELECT name,password FROM user where name='".$username."' AND password='".$password."'");
-	// $row = mysql_fetch_assoc($thisquery); 
-	
-	// if(json_encode($row) != 'false'){
-	// 	// approve login
-	// 	session_start();
-	// 	$_SESSION["user"]=$username;
-	// 	header('Location: index.php');
-
-	// }else{
-	// 	die("all wrong");
-	// }
 
 
 }else{
